@@ -1,30 +1,67 @@
-pipeline{ 
+pipeline {
     agent any
-    stages{
-        stage('build'){
-            steps{
-                echo "building"
+    environment {
+        ENV1 = "VALUE1"
+    }
+    stages {
+        stage('Build') {
+            steps {
+                // run your build scripts
+                checkout scm
+                sh '''
+                        echo "Deploying...."                      
+                    '''
             }
-        }
-        stage('test'){
-            steps{
-                echo "testing"
-            }
-        }
-        stage('deploy'){
-            steps{
-            //    withCredintials([
-              //      usernamePassword(credintials: 'id1', usernameVariables: USER1 , passwordVariable: PASS1)
-                    // this will use cred with id1 and define variable USER1 with value of username in credintial stored in jenkins
-                // ]) {
-                  //  sh "ssh ${USER1}@ip uptime"
-                        echo "deploy"
+            // post build section to use "publishBuildRecord" method to publish build record
+            post {
+                success {
+                sh '''
+                        echo "Deploying...."                      
+                    '''
                 }
             }
         }
-        post{
-            always{
-                echo "done"
+        stage('Unit Test') {
+            steps {
+                sh '''
+                        echo "Deploying...."                      
+                    '''
+            }
+            // post build section to use "publishTestResult" method to publish test result
+        }
+        stage('Deploy to Staging') {
+            steps {
+                sh '''
+                        echo "Deploying...."                      
+                    '''
+            }
+        }
+        stage('Deploy to dev') {
+            steps {
+                sh '''
+                        echo "Deploying...."                      
+                    '''
+            }
+        }
+        stage('Deploy to Prod') {
+            steps {
+                // Push the Weather App to Bluemix, production space
+                sh '''
+                        echo "Deploying...."                      
+                    '''
+            }
+            // post build section to use "publishDeployRecord" method to publish deploy record and notify OTC of stage status
+            post {
+                success {
+                sh '''
+                        echo "Deploying...."                      
+                    '''
+                }
+                failure {
+                sh '''
+                        echo "Deploying...."                      
+                    '''
+                }
             }
         }
     }
