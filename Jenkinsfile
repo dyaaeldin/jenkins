@@ -5,21 +5,11 @@ pipeline{
     }
     stages{
         stage('build'){
-            when{
-                expression{
-                    env.CURRENT_BRANCH == master || env.CURRENT_BRANCH == master
-                }
-            }
             steps{
                 echo "building"
             }
         }
         stage('test'){
-            when{
-                expression{
-                    env.CURRENT_BRANCH = master && env.CURRENT_BRANCH = master
-                }
-
             }
             steps{
                 echo "testing"
@@ -27,11 +17,12 @@ pipeline{
         }
         stage('deploy'){
             steps{
-                withCredintials([
-                    usernamePassword(credintials: 'id1', usernameVariables: USER1 , passwordVariable: PASS1)
+            //    withCredintials([
+              //      usernamePassword(credintials: 'id1', usernameVariables: USER1 , passwordVariable: PASS1)
                     // this will use cred with id1 and define variable USER1 with value of username in credintial stored in jenkins
-                ]) {
-                    sh "ssh ${USER1}@ip uptime"
+                // ]) {
+                  //  sh "ssh ${USER1}@ip uptime"
+			echo "deploy"
                 }
             }
         }
