@@ -8,9 +8,17 @@ pipeline {
             steps {
                 // run your build scripts
                 checkout scm
-                sh '''
-                        echo "Deploying...."                      
-                    '''
+                script{
+                  if (env.BRANCH_NAME == 'master') {
+                     echo "master"
+                  }
+                  if (env.BRANCH_NAME == 'stage') {
+                      echo "stage"
+                  }
+                  if (env.BRANCH_NAME == 'dev') {
+                      echo "dev"
+                  }
+                }
             }
             // post build section to use "publishBuildRecord" method to publish build record
             post {
